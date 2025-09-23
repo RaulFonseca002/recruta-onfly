@@ -1,24 +1,52 @@
-# Desafio Recruta Onfly - Custom Node Random.org
+# Desafio Recruta Onfly - Custom Node n8n
 
-Este repositório contém o desafio técnico para a criação de um node customizado do n8n.
+Este repositório contém a solução para o desafio técnico do processo seletivo Recruta Onfly.
 
-## Desenvolvimento (Testando Mudanças)
+O objetivo foi criar um node customizado para o n8n que se integra com a API pública do `Random.org` para gerar números aleatórios, rodando em um ambiente Docker com PostgreSQL.
 
-O servidor n8n (rodando no Docker) carrega os nodes customizados apenas na inicialização. Portanto, o fluxo para testar uma mudança no código é o seguinte:
+## Como Executar
 
-1.  Com o `docker-compose up` (Terminal 1) e o `npm run build:watch` (Terminal 2) rodando, faça sua mudança no código (ex: em `n8n-nodes-random/nodes/Random/Random.node.ts`).
+### Pré-requisitos
+* Git
+* Node.js (v22 LTS recomendado)
+* Docker
+* Docker Compose
 
-2.  Se o `watch` (Terminal 2) não funcionar, compile seu código manualmente:
+### Passos para Execução
+Todos os comandos devem ser executados a partir da pasta raiz do projeto.
+
+1.  **Clone o Repositório:**
     ```bash
-    # (Dentro da pasta 'n8n-nodes-random')
-    npm run build
+    git clone https://github.com/RaulFonseca002/recruta-onfly.git
+    cd recruta-onfly
     ```
 
-3.  Reinicie o servidor Docker (Terminal 1):
+2.  **Instale, Compile e Inicie:**
     ```bash
-    # (Dentro da pasta raiz 'recruta-onfly')
-    # Pressione Ctrl+C para parar
-    docker-compose up
+    npm run start
     ```
 
-4.  Recarregue a interface do n8n no navegador (`http://localhost:5678`).
+3.  **Acesse o n8n:**
+    Aguarde a inicialização dos serviços e acesse a interface do n8n em:
+    [http://localhost:5678](http://localhost:5678)
+
+    O node **"Random"** estará disponível na lista de integrações.
+
+---
+## Script NPM
+
+### `npm run setup`
+Instala as dependências do projeto do node customizado (`n8n-nodes-random`).
+
+### `npm run build`
+Compila o código TypeScript do node para JavaScript
+
+### `npm run start:docker`
+**Este comando manterá o terminal ocupado com os logs dos serviços.**
+Inicia os contêineres do n8n e do PostgreSQL usando `docker-compose up`. 
+
+### `npm run start`
+Executa `setup`, `build` e `start:docker` em sequência.
+
+### `npm run dev`
+Executa `build` e reinicia o docker
