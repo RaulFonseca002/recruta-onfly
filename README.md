@@ -12,41 +12,63 @@ O objetivo foi criar um node customizado para o n8n que se integra com a API pú
 * Docker
 * Docker Compose
 
-### Passos para Execução
-Todos os comandos devem ser executados a partir da pasta raiz do projeto.
+## Execução Inicial
 
-1.  **Clone o Repositório:**
+Siga estes passos para instalar as dependências, compilar o node e iniciar a aplicação.
+
+1.  **Clone o repositório:**
+
     ```bash
     git clone https://github.com/RaulFonseca002/recruta-onfly.git
     cd recruta-onfly
     ```
 
-2.  **Instale, Compile e Inicie:**
+2.  **Instale as dependências e compile o node:**
     ```bash
-    npm run start
+    cd n8n-nodes-random
+    npm install
+    npm run build
     ```
 
-3.  **Acesse o n8n:**
-    Aguarde a inicialização dos serviços e acesse a interface do n8n em:
-    [http://localhost:5678](http://localhost:5678)
+3.  **Inicie o servidor n8n:**
+    ```bash
+    cd ..
+    docker-compose up --build
+    ```
 
-    O node **"Random"** estará disponível na lista de integrações.
+4.  **Acesse a aplicação:**
+    Aguarde a inicialização dos serviços (você verá os logs no terminal) e acesse o n8n no localhost 
+    que aparecer 
+
+## Desenvolvimento
+
+Este é o fluxo de trabalho para aplicar mudanças no código-fonte do node.
+
+1.  **Pare a Execução Atual:**
+    No terminal onde o `docker-compose up` está rodando, pressione `Ctrl+C`.
+
+2.  **Recompile o Node:**
+    Em outro terminal, ou no mesmo, navegue até a pasta do node e execute o build.
+    ```bash
+    cd n8n-nodes-random
+    npm run build
+    cd ..
+    ```
+
+3.  **Inicie o Servidor Novamente:**
+    Com o código já compilado, inicie o Docker novamente.
+    ```bash
+    docker-compose up
+    ```
 
 ---
-## Script NPM
 
-### `npm run setup`
-Instala as dependências do projeto do node customizado (`n8n-nodes-random`).
+## Finalizando o Uso (Comando Down)
 
-### `npm run build`
-Compila o código TypeScript do node para JavaScript
+Quando terminar de usar e quiser desligar e remover completamente os contêineres e a rede, use o comando `down`.
 
-### `npm run start:docker`
-**Este comando manterá o terminal ocupado com os logs dos serviços.**
-Inicia os contêineres do n8n e do PostgreSQL usando `docker-compose up`. 
-
-### `npm run start`
-Executa `setup`, `build` e `start:docker` em sequência.
-
-### `npm run dev`
-Executa `build` e reinicia o docker
+1.  Se o `docker-compose up` estiver rodando, pare-o com `Ctrl+C`.
+2.  Execute o comando `down` na pasta raiz:
+    ```bash
+    docker-compose down
+    ```
