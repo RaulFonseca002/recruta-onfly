@@ -1,4 +1,3 @@
-version: '3'
 
 services:
   postgres:
@@ -17,9 +16,8 @@ services:
       retries: 10
 
   n8n:
-    image: n8nio/n8n:latest
+    build: .
     restart: always
-    user: "${UID}:${GID}" 
     ports:
       - "5678:5678"
     environment:
@@ -30,11 +28,11 @@ services:
       - DB_POSTGRESDB_PASSWORD=mysecretpassword
       - N8N_CUSTOM_EXTENSIONS_DIR=/home/node/.n8n/custom
     volumes:
-      - ./.n8n:/home/node/.n8n
-      - ./n8n-nodes-random:/home/node/.n8n/custom/n8n-nodes-random
+      - n8n_data:/home/node/.n8n
     depends_on:
       postgres:
         condition: service_healthy
 
 volumes:
   postgres_data:
+  n8n_data:
